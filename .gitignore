@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Nginx logs
+cr-p-development/lab1/logs/
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Local nginx configs
+*.local.conf

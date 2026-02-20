@@ -1,0 +1,195 @@
+/* ===== Back Link ===== */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 32px;
+    transition: opacity 0.2s;
+}
+
+.back-link:hover {
+    opacity: 0.5;
+}
+
+/* ===== Departments Page ===== */
+.departments {
+    animation: Down 1s ease 0.5s both;
+}
+
+.departments__container {
+    padding: 80px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.departments__title {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 48px;
+    letter-spacing: -1px;
+}
+
+/* ===== Grid ===== */
+.dept-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 64px;
+}
+
+.dept-card__img-wrap {
+    background: #f5f0eb;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+}
+
+.dept-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dept-card__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 14px 0;
+    gap: 12px;
+}
+
+.dept-card__name {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.dept-card__year {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #888;
+    white-space: nowrap;
+}
+
+/* ===== Bottom ===== */
+.dept-bottom {
+    display: flex;
+    gap: 64px;
+    padding-top: 32px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.dept-bottom__philosophy {
+    flex: 1;
+}
+
+.dept-bottom__philosophy h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.dept-bottom__philosophy p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.8;
+}
+
+.dept-bottom__reach h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.dept-bottom__reach ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dept-bottom__reach a {
+    font-size: 15px;
+    color: #666;
+    transition: color 0.2s;
+}
+
+.dept-bottom__reach a:hover {
+    color: #1a1a1a;
+}
+
+/* ===== Tablet ===== */
+@media (max-width: 768px) {
+    .departments__container {
+        padding: 60px 6%;
+    }
+
+    .departments__title {
+        font-size: 36px;
+        margin-bottom: 36px;
+    }
+
+    .dept-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .dept-card__img-wrap {
+        aspect-ratio: 16 / 10;
+    }
+
+    .dept-card__name {
+        font-size: 15px;
+    }
+
+    .dept-bottom {
+        gap: 40px;
+    }
+
+    .dept-bottom__philosophy h3,
+    .dept-bottom__reach h3 {
+        font-size: 18px;
+    }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 480px) {
+    .departments__container {
+        padding: 40px 5%;
+    }
+
+    .departments__title {
+        font-size: 28px;
+        margin-bottom: 28px;
+    }
+
+    .dept-card__img-wrap {
+        aspect-ratio: 3 / 2;
+        border-radius: 8px;
+    }
+
+    .dept-card__info {
+        flex-direction: row;
+        padding: 10px 0;
+    }
+
+    .dept-card__name {
+        font-size: 13px;
+    }
+
+    .dept-card__year {
+        font-size: 12px;
+    }
+
+    .dept-bottom {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .dept-bottom__philosophy p {
+        font-size: 14px;
+    }
+}
