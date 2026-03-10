@@ -1,0 +1,13 @@
+stages:
+  - deploy
+
+deploy_to_vercel:
+  stage: deploy
+  image: node:20-alpine
+  script:
+    - npm i -g vercel
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
