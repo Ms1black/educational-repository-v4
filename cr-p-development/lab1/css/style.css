@@ -358,7 +358,6 @@ section:nth-of-type(4) { animation-delay: 1.1s; }
         font-size: 24px;
     }
 
-    /* Labs grid — single column */
     .labs-grid {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
@@ -376,7 +375,6 @@ section:nth-of-type(4) { animation-delay: 1.1s; }
         object-fit: cover;
     }
 
-    /* Footer — stacked */
     .footer__inner {
         flex-direction: column;
     }
@@ -404,7 +402,6 @@ section:nth-of-type(4) { animation-delay: 1.1s; }
     }
 }
 
-/* ===== Popup ===== */
 .popup-overlay {
     position: fixed;
     inset: 0;

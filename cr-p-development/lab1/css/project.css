@@ -1,4 +1,4 @@
-/* ===== Back Link ===== */
+
 .back-link {
     display: inline-flex;
     align-items: center;
@@ -14,7 +14,6 @@
     opacity: 0.5;
 }
 
-/* ===== Project Page ===== */
 .project {
     animation: Down 1s ease 0.5s both;
 }
@@ -32,7 +31,6 @@
     margin-bottom: 56px;
 }
 
-/* ===== Two-column body ===== */
 .project__body {
     display: flex;
     gap: 64px;
@@ -94,7 +92,6 @@
     font-size: 14px;
 }
 
-/* Кнопки действий */
 .project__table-actions {
     display: flex;
     flex-wrap: wrap;
@@ -110,7 +107,6 @@
     gap: 12px;
 }
 
-/* Форма добавления записи (без JS) */
 .project__add-form {
     margin-top: 32px;
     margin-left: auto;
@@ -187,7 +183,6 @@
     margin: 0;
 }
 
-/* Модальное окно */
 .modal-overlay {
     position: fixed;
     inset: 0;
