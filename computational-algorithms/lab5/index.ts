@@ -8,32 +8,68 @@ function askQuestion(query: string): Promise<string> {
     return new Promise(resolve => rl.question(query, resolve));
 }
 
-function intersection(first: number[], second: number[]): number[] {
-    const secondSet = new Set(second);
-    const resultSet = new Set<number>();
 
-    for (const value of first) {
-        if (secondSet.has(value)) {
-            resultSet.add(value);
+async function findMax():  Promise<number> {
+    const input = await askQuestion("Введите натуральное число (0 для завершения): ");
+    const current = parseInt(input, 10);
+
+    if (isNaN(current) || current === 0) {
+        return 0;
+    }
+
+    const nextMax = await findMax();
+    return current > nextMax ? current : nextMax;
+}
+
+function apostolicoCrochemore(text: string, pattern: string): number[] {
+    const m = pattern.length;
+    const n = text.length;
+    if (m === 0) return [];
+
+    let i = 0, j = -1;
+    let failure = new Array(m + 1).fill(0);
+    failure[0] = -1;
+
+    while (i < m) {
+        while (j > -1 && pattern[i] !== pattern[j]) {
+            j = failure[j];
+        }
+        i++;
+        j++;
+        if (i < m && pattern[i] === pattern[j]) {
+            failure[i] = failure[j];
+        } else {
+            failure[i] = j;
         }
     }
 
-    return Array.from(resultSet);
+    let result: number[] = [];
+    i = 0; j = 0;
+
+    while (i < n) {
+        while (j > -1 && text[i] !== pattern[j]) {
+            j = failure[j];
+        }
+        i++;
+        j++;
+        if (j >= m) {
+            result.push(i - j);
+            j = failure[j];
+        }
+    }
+    return result;
 }
 
-function parseNumberArray(input: string): number[] {
-    return input.trim().split(/\s+/).filter(Boolean).map(Number).filter(value => !Number.isNaN(value));
-}
+
 
 async function main(): Promise<void> {
-    const firstInput = await askQuestion('Введите элементы первого массива через пробел: ');
-    const secondInput = await askQuestion('Введите элементы второго массива через пробел: ');
+    const text = await askQuestion("Введите текст: ");
+    const pattern = await askQuestion("Введите шаблон: ");
+    const result = await findMax();
+    const result2 = await apostolicoCrochemore(text, pattern);
 
-    const first = parseNumberArray(firstInput);
-    const second = parseNumberArray(secondInput);
-    const result = intersection(first, second);
-
-    console.log('Пересечение:', result);
+    console.log(result);
+    console.log(result2);
 
     rl.close();
 }
