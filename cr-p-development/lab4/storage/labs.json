@@ -1,0 +1,49 @@
+{
+    "labs": [
+        {
+            "id": 1,
+            "number": 1,
+            "title": "[H-01] Humanoid Systems",
+            "theme": "Верстка и структура сайта",
+            "year": "2025-2026",
+            "url": "humanoid.php",
+            "image": "img\/dept-humanoid.png"
+        },
+        {
+            "id": 2,
+            "number": 2,
+            "title": "[B-02] Bio-Cybernetics Lab",
+            "theme": "Формы и валидация",
+            "year": "2024-2025",
+            "url": "#",
+            "image": "img\/dept-bio-cybernetics.png"
+        },
+        {
+            "id": 3,
+            "number": 3,
+            "title": "[A-03] Autonomous Flight",
+            "theme": "Интерполяция методом МНК",
+            "year": "2024-2025",
+            "url": "#",
+            "image": "img\/dept-flight.png"
+        },
+        {
+            "id": 4,
+            "number": 4,
+            "title": "[S-04] Soft Robotics",
+            "theme": "Авторизация, сессии, AJAX",
+            "year": "2022-2023",
+            "url": "#",
+            "image": "img\/dept-soft-robotics.png"
+        },
+        {
+            "id": 5,
+            "number": 5,
+            "title": "23454545",
+            "theme": "234633",
+            "year": "2025-2027",
+            "url": "humanoid.php",
+            "image": "img\/lab-1775734204-a3821be4.jpg"
+        }
+    ]
+}

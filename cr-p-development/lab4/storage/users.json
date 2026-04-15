@@ -1,0 +1,15 @@
+{
+    "users": [
+        {
+            "login": "123",
+            "passwordHash": "$2y$12$136w9xHatOWA8qrK4axEi.h9ldFtUiOJ29wUjBh8roWojY.9fyKla",
+            "createdAt": "2026-04-09T09:36:20+00:00"
+        },
+        {
+            "login": "1234",
+            "passwordHash": "$2y$12$iWuRPfNONys7oNotp5U8Se7CqCY5Swfg1oRgnptLz2hM6W.uqXC2u",
+            "role": "admin",
+            "createdAt": "2026-04-09T09:54:02+00:00"
+        }
+    ]
+}

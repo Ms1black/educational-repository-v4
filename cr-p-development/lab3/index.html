@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAB 3 | 最小二乗法補間</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="page">
+  <div class="lang-switch">
+    <button class="button button--lang" id="langToggleBtn" type="button">RU</button>
+  </div>
+
+  <main class="main">
+    <section class="hero">
+      <div class="container container--medium">
+        <h1 class="hero__title" data-i18n="heroTitle">最小二乗法による関数補間</h1>
+        <p class="hero__text" data-i18n="heroText">
+          各行に <code>x y</code> 形式で点を入力し、多項式の次数を指定すると、
+          係数・式・誤差表を取得できます。
+        </p>
+      </div>
+    </section>
+
+    <section class="calculator">
+      <div class="container container--wide">
+        <div class="calculator__grid">
+          <article class="card card--input">
+            <h2 class="card__title" data-i18n="inputTitle">入力データ</h2>
+            <label class="form-field">
+              <span class="form-field__label" data-i18n="pointsLabel">点（各行: x y）</span>
+              <textarea
+                class="form-field__control form-field__control--textarea"
+                id="pointsInput"
+                rows="12"
+                placeholder="-2 4&#10;-1 1&#10;0 0&#10;1 1&#10;2 4"
+              ></textarea>
+            </label>
+
+            <label class="form-field">
+              <span class="form-field__label" data-i18n="degreeLabel">多項式の次数</span>
+              <input class="form-field__control" id="degreeInput" type="number" min="0" max="10" value="2">
+            </label>
+
+            <div class="card__actions">
+              <button class="button button--primary" id="calculateBtn" type="button" data-i18n="calcBtn">計算</button>
+              <button class="button" id="sampleBtn" type="button" data-i18n="sampleBtn">サンプル</button>
+              <button class="button button--danger" id="clearBtn" type="button" data-i18n="clearBtn">クリア</button>
+            </div>
+            <p class="card__hint" data-i18n="hintText">最小点数: 2。次数は点の数より小さくしてください。</p>
+            <p class="message" id="messageBox" aria-live="polite"></p>
+          </article>
+
+          <article class="card card--result" id="result">
+            <h2 class="card__title" data-i18n="resultTitle">結果</h2>
+            <div class="result-block">
+              <h3 class="result-block__title" data-i18n="coeffTitle">係数</h3>
+              <pre class="result-block__content" id="coefficientsBox">-</pre>
+            </div>
+
+            <div class="result-block">
+              <h3 class="result-block__title" data-i18n="polyTitle">多項式</h3>
+              <pre class="result-block__content result-block__content--equation" id="equationBox">-</pre>
+            </div>
+
+            <div class="result-block">
+              <h3 class="result-block__title" data-i18n="errorTitle">誤差</h3>
+              <p class="result-block__meta" id="mseBox">MSE: -</p>
+            </div>
+
+            <div class="result-block">
+              <h3 class="result-block__title" data-i18n="chartTitle">グラフ</h3>
+              <div class="chart-wrap">
+                <canvas class="chart" id="chartCanvas" width="760" height="360"></canvas>
+              </div>
+              <p class="chart-legend">
+                <span class="chart-legend__item">
+                  <span class="chart-legend__dot chart-legend__dot--point"></span>
+                  <span data-i18n="legendPoints">入力点</span>
+                </span>
+                <span class="chart-legend__item">
+                  <span class="chart-legend__dot chart-legend__dot--curve"></span>
+                  <span data-i18n="legendCurve">近似曲線</span>
+                </span>
+              </p>
+            </div>
+
+            <div class="result-block">
+              <h3 class="result-block__title" data-i18n="tableTitle">値テーブル</h3>
+              <div class="table-wrap">
+                <table class="table" id="resultTable">
+                  <thead>
+                    <tr>
+                      <th>x</th>
+                      <th>y</th>
+                      <th data-i18n="tableYApprox">y(多項式)</th>
+                      <th data-i18n="tableError">誤差</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="4" data-i18n="noData">データなし</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

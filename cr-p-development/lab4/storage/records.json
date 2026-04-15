@@ -1,0 +1,22 @@
+{
+    "records": [
+        {
+            "id": 1,
+            "title": "123",
+            "category": "123",
+            "value": 123,
+            "note": "",
+            "author": "123",
+            "createdAt": "2026-04-09 09:36:32"
+        },
+        {
+            "id": 2,
+            "title": "14124",
+            "category": "1212",
+            "value": 5,
+            "note": "123124",
+            "author": "123",
+            "createdAt": "2026-04-09 09:44:48"
+        }
+    ]
+}

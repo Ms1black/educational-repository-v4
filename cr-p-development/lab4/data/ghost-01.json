@@ -1,0 +1,29 @@
+{
+    "icon": "bi-flower2",
+    "rows": [
+        {
+            "title": "The Core Hypothesis",
+            "description": "動きの未来を創造するには、ゼロレイテンシーのフィードバックが必要です。私たちは人間の筋肉の記憶をシリコンアクチュエータに直接マッピングし、「機械的な遅れ」をなくします。"
+        },
+        {
+            "title": "Technical Execution",
+            "description": "重いモーターの代わりに光ファイバーの「腱」を使用。これにより、200kgの工業用フレームで能楽師のような優雅な動きを実現しました。"
+        },
+        {
+            "title": "Ethical Boundary",
+            "description": "このプロジェクトは、「不気味な静寂」、つまり機械が音を立てるのをやめ、人間のような呼吸パターンで動き始める瞬間を探求する。"
+        },
+        {
+            "title": "21312",
+            "description": "21432"
+        },
+        {
+            "title": "123",
+            "description": "123"
+        },
+        {
+            "title": "14",
+            "description": ""
+        }
+    ]
+}

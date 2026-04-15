@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIAR — Research Departments</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/labs.css">
+</head>
+<body>
+
+  <header class="header">
+    <nav class="nav">
+      <ul class="nav__list">
+        <li class="nav__item"><a href="labs.html" class="nav__link">LABS</a></li>
+        <li class="nav__item"><a href="index.html#features" class="nav__link">PHILOSOPHY</a></li>
+        <li class="nav__item"><a href="index.html#about" class="nav__link">ADMISSIONS</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="departments">
+    <div class="departments__container">
+
+      <a href="index.html" class="back-link"><i class="bi bi-arrow-left"></i> Back</a>
+      <h1 class="departments__title">RESEARCH<br>DEPARTMENTS</h1>
+
+      <div class="dept-grid" id="deptGrid">
+        <article class="dept-card">
+          <div class="dept-card__img-wrap"></div>
+          <div class="dept-card__info">
+            <span class="dept-card__name">Loading...</span>
+            <span class="dept-card__year">...</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="dept-bottom">
+        <div class="dept-bottom__philosophy">
+          <h3>Philosophy &amp; Reach out</h3>
+          <p><span>TIARでは、機械を作るのではなく、直観性を追求します。私たちの研究は、日本の伝統的な精密さと未来の展望をつなぐ架け橋です。</span></p>
+        </div>
+        <div class="dept-bottom__reach">
+          <h3>Reach out</h3>
+          <ul>
+            <li><a href="#">Admissions</a></li>
+            <li><a href="#">Faculty Press</a></li>
+            <li><a href="#">General Inquiry</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <script>
+    (async function renderLabsFromStorage() {
+      const grid = document.getElementById("deptGrid");
+      try {
+        const response = await fetch("api.php?action=labs_public", { credentials: "same-origin" });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+          throw new Error(data.error || "Unable to load labs.");
+        }
+        const labs = Array.isArray(data.labs) ? data.labs : [];
+        if (labs.length === 0) {
+          grid.innerHTML = `
+            <article class="dept-card">
+              <div class="dept-card__img-wrap"></div>
+              <div class="dept-card__info">
+                <span class="dept-card__name">No labs yet</span>
+                <span class="dept-card__year">-</span>
+              </div>
+            </article>
+          `;
+          return;
+        }
+
+        grid.innerHTML = "";
+        labs.forEach((lab) => {
+          const card = document.createElement(lab.url ? "a" : "article");
+          card.className = "dept-card";
+          if (lab.url && lab.url !== "#") {
+            card.href = lab.url;
+          }
+          const imagePath = lab.image || "img/dept-humanoid.png";
+          const title = lab.title || "Untitled lab";
+          const year = lab.year || "-";
+
+          card.innerHTML = `
+            <div class="dept-card__img-wrap">
+              <img src="${imagePath}" alt="${title}">
+            </div>
+            <div class="dept-card__info">
+              <span class="dept-card__name">${title}</span>
+              <span class="dept-card__year">${year}</span>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (error) {
+        grid.innerHTML = `
+          <article class="dept-card">
+            <div class="dept-card__img-wrap"></div>
+            <div class="dept-card__info">
+              <span class="dept-card__name">Error loading labs</span>
+              <span class="dept-card__year">-</span>
+            </div>
+          </article>
+        `;
+      }
+    })();
+  </script>
+</body>
+</html>
