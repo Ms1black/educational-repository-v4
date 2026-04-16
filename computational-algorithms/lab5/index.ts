@@ -9,16 +9,25 @@ function askQuestion(query: string): Promise<string> {
 }
 
 
-async function findMax():  Promise<number> {
-    const input = await askQuestion("Введите натуральное число (0 для завершения): ");
-    const current = parseInt(input, 10);
+async function findMax(): Promise<number> {
+    let max = 0;
 
-    if (isNaN(current) || current === 0) {
-        return 0;
+    while (true) {
+        const input = await askQuestion('');
+        const current = Number.parseInt(input.trim(), 10);
+
+        if (Number.isNaN(current)) {
+            continue;
+        }
+
+        if (current === 0) {
+            return max;
+        }
+
+        if (current > max) {
+            max = current;
+        }
     }
-
-    const nextMax = await findMax();
-    return current > nextMax ? current : nextMax;
 }
 
 function apostolicoCrochemore(text: string, pattern: string): number[] {
@@ -63,12 +72,13 @@ function apostolicoCrochemore(text: string, pattern: string): number[] {
 
 
 async function main(): Promise<void> {
+
+    console.log("Введите последовательность натуральных чисел (по одному в строке), 0 для завершения:");
+    const result = await findMax();    
+    console.log(result);
     const text = await askQuestion("Введите текст: ");
     const pattern = await askQuestion("Введите шаблон: ");
-    const result = await findMax();
     const result2 = await apostolicoCrochemore(text, pattern);
-
-    console.log(result);
     console.log(result2);
 
     rl.close();

@@ -48,6 +48,71 @@ class BinaryTree {
         }
         return result;
     }
+    visualize(): string[] {
+        if (this.root === null) return ["(empty)"];
+        const rendered = this.renderSubtree(this.root);
+        return rendered.lines.map((line) => line.trimEnd());
+    }
+    private renderSubtree(node: TreeNode): { lines: string[]; width: number; height: number; middle: number } {
+        const value = node.value;
+        const valueWidth = value.length;
+
+        if (node.left === null && node.right === null) {
+            return { lines: [value], width: valueWidth, height: 1, middle: Math.floor(valueWidth / 2) };
+        }
+
+        if (node.right === null && node.left !== null) {
+            const left = this.renderSubtree(node.left);
+            const firstLine = " ".repeat(left.middle + 1) + " ".repeat(left.width - left.middle - 1) + value;
+            const secondLine = " ".repeat(left.middle) + "/" + " ".repeat(left.width - left.middle - 1 + valueWidth);
+            const shiftedLines = left.lines.map((line) => line + " ".repeat(valueWidth));
+            return {
+                lines: [firstLine, secondLine, ...shiftedLines],
+                width: left.width + valueWidth,
+                height: left.height + 2,
+                middle: left.width + Math.floor(valueWidth / 2),
+            };
+        }
+
+        if (node.left === null && node.right !== null) {
+            const right = this.renderSubtree(node.right);
+            const firstLine = value + " ".repeat(right.middle) + " ".repeat(right.width - right.middle);
+            const secondLine = " ".repeat(valueWidth + right.middle) + "\\" + " ".repeat(right.width - right.middle - 1);
+            const shiftedLines = right.lines.map((line) => " ".repeat(valueWidth) + line);
+            return {
+                lines: [firstLine, secondLine, ...shiftedLines],
+                width: valueWidth + right.width,
+                height: right.height + 2,
+                middle: Math.floor(valueWidth / 2),
+            };
+        }
+
+        const left = this.renderSubtree(node.left as TreeNode);
+        const right = this.renderSubtree(node.right as TreeNode);
+        const firstLine = " ".repeat(left.middle + 1)
+            + " ".repeat(left.width - left.middle - 1)
+            + value
+            + " ".repeat(right.middle)
+            + " ".repeat(right.width - right.middle);
+        const secondLine = " ".repeat(left.middle)
+            + "/"
+            + " ".repeat(left.width - left.middle - 1 + valueWidth + right.middle)
+            + "\\"
+            + " ".repeat(right.width - right.middle - 1);
+
+        const leftLines = left.lines.slice();
+        const rightLines = right.lines.slice();
+        if (left.height < right.height) leftLines.push(...Array(right.height - left.height).fill(" ".repeat(left.width)));
+        else if (right.height < left.height) rightLines.push(...Array(left.height - right.height).fill(" ".repeat(right.width)));
+
+        const mergedLines = leftLines.map((line, idx) => line + " ".repeat(valueWidth) + rightLines[idx]);
+        return {
+            lines: [firstLine, secondLine, ...mergedLines],
+            width: left.width + valueWidth + right.width,
+            height: Math.max(left.height, right.height) + 2,
+            middle: left.width + Math.floor(valueWidth / 2),
+        };
+    }
 }
 
 async function main(): Promise<void> {
@@ -63,6 +128,9 @@ async function main(): Promise<void> {
     tree2.buildMinHeight(arr2);
 
     tree1.attachSubtree(targetValue.trim(), tree2);
+    console.log("Визуализация дерева:");
+    console.log(tree1.visualize().join("\n"));
+    console.log("Симметричный обход:");
     console.log(tree1.printInOrder().join(" "));
 
     rl.close();
