@@ -1,0 +1,83 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: tiar_db
+      POSTGRES_USER: tiar
+      POSTGRES_PASSWORD: tiar_secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tiar -d tiar_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  auth-service:
+    build: ./auth-service
+    environment:
+      DATABASE_URL: postgresql://tiar:tiar_secret@db:5432/tiar_db
+      JWT_SECRET: change-me-in-production
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+
+  data-service-1:
+    build: ./data-service
+    environment:
+      DATABASE_URL: postgresql://tiar:tiar_secret@db:5432/tiar_db
+      JWT_SECRET: change-me-in-production
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+
+  data-service-2:
+    build: ./data-service
+    environment:
+      DATABASE_URL: postgresql://tiar:tiar_secret@db:5432/tiar_db
+      JWT_SECRET: change-me-in-production
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - WDS_SOCKET_PORT=0
+    networks:
+      - backend
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - auth-service
+      - data-service-1
+      - data-service-2
+    networks:
+      - backend
+
+volumes:
+  pgdata:
+
+networks:
+  backend:

@@ -1,0 +1,117 @@
+.card {
+  background: var(--c-surface);
+  border-radius: var(--r-card);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform var(--t), box-shadow var(--t);
+  animation: fadeUp 0.35s ease both;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Subtle left accent line */
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 3px;
+  background: var(--c-text);
+  border-radius: 0 3px 3px 0;
+  opacity: 0;
+  transition: opacity var(--t);
+}
+
+.card:hover::before { opacity: 1; }
+
+/* Top row: index code + status badge */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.code {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--c-faint);
+  text-transform: uppercase;
+  font-family: 'Courier New', monospace;
+}
+
+/* Title */
+.title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--c-text);
+}
+
+/* Description – clamp to 4 lines */
+.description {
+  font-size: 14px;
+  color: var(--c-muted);
+  line-height: 1.75;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* Footer row */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--c-border);
+  gap: 8px;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.category {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--c-muted);
+  text-transform: uppercase;
+}
+
+.dueDate {
+  font-size: 11px;
+  color: var(--c-faint);
+}
+
+.deleteBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-faint);
+  font-size: 14px;
+  transition: background var(--t), color var(--t);
+  flex-shrink: 0;
+}
+
+.deleteBtn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
