@@ -1,19 +1,16 @@
 # TIAR — Tokyo Institute for Advanced Robotics
 
+
 ## Архитектура
 
 ```
 Browser
   └── nginx :80
-        ├── /                    → frontend (React, CRA dev server)
-        ├── /api/auth/           → auth-service :5000  (Flask, JWT)
-        ├── /api/auth/docs       → Swagger UI (auth)
-        ├── /api/auth/openapi.json
-        ├── /api/data/           → data-service-1 :5001  ┐ Round-robin
-        │                        → data-service-2 :5001  ┘ load balancing
-        ├── /api/data/docs       → Swagger UI (data)
-        └── /api/data/openapi.json
-                      └── PostgreSQL :5432
+        ├── /              → frontend (React, CRA dev server)
+        ├── /api/auth/     → auth-service :5000  (Flask, JWT)
+        └── /api/data/     → data-service-1 :5001  ┐ Round-robin
+                           → data-service-2 :5001  ┘ load balancing
+                                    └── PostgreSQL :5432
 ```
 
 | Сервис | Технологии |
@@ -53,23 +50,6 @@ docker-compose down
 docker-compose down -v
 ```
 
-## Swagger UI
-
-После запуска интерактивная документация доступна по адресам:
-
-| Сервис | URL |
-|---|---|
-| Auth Service | http://localhost/api/auth/docs |
-| Data Service | http://localhost/api/data/docs |
-
-> Swagger UI загружается через CDN — интернет при запуске обязателен.
-
-Чтобы тестировать защищённые эндпоинты:
-1. Выполните `POST /login` и скопируйте `token` из ответа
-2. Нажмите кнопку **Authorize** в правом верхнем углу
-3. Введите значение: `<token>` (поле Bearer)
-4. Теперь все запросы будут отправляться с JWT-токеном
-
 ## Переменные окружения
 
 Все переменные задаются в `docker-compose.yml`.
@@ -83,6 +63,23 @@ docker-compose down -v
 | `POSTGRES_PASSWORD` | db | Пароль БД |
 
 > Перед деплоем обязательно смените `JWT_SECRET` и `POSTGRES_PASSWORD`.
+
+## Swagger UI
+
+После запуска интерактивная документация доступна по адресам:
+
+| Сервис | URL |
+|---|---|
+| Auth Service | http://localhost/api/auth/apidocs |
+| Data Service | http://localhost/api/data/apidocs |
+
+> Swagger UI позволяет просматривать все эндпоинты и отправлять запросы прямо из браузера без Postman.
+
+Чтобы тестировать защищённые эндпоинты в Swagger:
+1. Выполните `POST /login` и скопируйте `token` из ответа
+2. Нажмите кнопку **Authorize** в правом верхнем углу
+3. Введите значение в формате: `Bearer <token>`
+4. Теперь все запросы будут отправляться с JWT-токеном
 
 ## API
 
@@ -131,33 +128,31 @@ Authorization: Bearer <token>
 
 ```
 hw1/
-├── auth-service/
+├── auth-service/          # Flask микросервис авторизации
 │   ├── blueprints/
-│   │   ├── auth.py        ← /register, /login
-│   │   └── docs.py        ← /docs, /openapi.json
+│   │   └── auth.py        # /register, /login
 │   ├── app.py
 │   ├── models.py
 │   ├── extensions.py
 │   └── requirements.txt
-├── data-service/
+├── data-service/          # Flask микросервис данных
 │   ├── blueprints/
-│   │   ├── lab_works.py   ← CRUD лаб. работ
-│   │   ├── categories.py  ← список категорий
-│   │   └── docs.py        ← /docs, /openapi.json
+│   │   ├── lab_works.py   # CRUD лаб. работ
+│   │   └── categories.py  # список категорий
 │   ├── app.py
 │   ├── models.py
 │   ├── extensions.py
 │   └── requirements.txt
-├── frontend/
+├── frontend/              # React приложение
 │   └── src/
-│       ├── app/           ← App.jsx, роутинг через state
-│       ├── pages/         ← LabWorksPage, OverviewPage, AuthPage
-│       ├── features/      ← Formik-формы
-│       ├── entities/      ← LabWorkCard, константы
-│       ├── widgets/       ← AppHeader, AppFooter
-│       └── shared/        ← axios-клиенты, UI-компоненты
+│       ├── app/           # App.jsx, роутинг через state
+│       ├── pages/         # LabWorksPage, OverviewPage, AuthPage
+│       ├── features/      # Formik-формы
+│       ├── entities/      # LabWorkCard, константы
+│       ├── widgets/       # AppHeader, AppFooter
+│       └── shared/        # axios-клиенты, UI-компоненты
 ├── nginx/
-│   └── nginx.conf         ← reverse proxy + load balancing
+│   └── nginx.conf         # reverse proxy + load balancing
 ├── docker-compose.yml
 └── setup.md
 ```
