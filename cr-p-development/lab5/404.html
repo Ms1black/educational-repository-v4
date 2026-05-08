@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — TIAR</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f0eb;
+    }
+
+    .error-card {
+      width: 380px;
+      max-width: 90%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+      animation: rise 0.6s ease both;
+    }
+
+    .error-card__top {
+      background: #c3c3c3;
+      padding: 44px 0 36px;
+      text-align: center;
+      color: #fff;
+      font-size: 52px;
+      position: relative;
+    }
+
+    .error-card__top::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 14px solid #c3c3c3;
+    }
+
+    .error-card__bottom {
+      background: #fff;
+      padding: 40px 32px 32px;
+      text-align: center;
+    }
+
+    .error-card__code {
+      font-size: 64px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .error-card__title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+
+    .error-card__text {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .error-card__btn {
+      display: inline-block;
+      background: #858484;
+      color: #fff;
+      border-radius: 24px;
+      padding: 12px 36px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .error-card__btn:hover {
+      opacity: 0.85;
+    }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .error-card__code {
+        font-size: 48px;
+      }
+      .error-card__top {
+        font-size: 40px;
+        padding: 32px 0 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="error-card">
+    <div class="error-card__top">
+      <i class="bi bi-emoji-tear-fill"></i>
+    </div>
+    <div class="error-card__bottom">
+      <div class="error-card__code">404</div>
+      <h1 class="error-card__title">Page not found</h1>
+      <p class="error-card__text">このページは存在しないか、移動した可能性があります。</p>
+      <a class="error-card__btn" href="index.html">ホームに戻る</a>
+    </div>
+  </div>
+
+</body>
+</html>

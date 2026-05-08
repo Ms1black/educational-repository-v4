@@ -20,6 +20,10 @@ function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function formatElapsedTime(elapsedMs: number): string {
+    return `${elapsedMs.toFixed(3)} мс`;
+}
+
 function readMatrixFromFile(filePath: string): Matrix {
     const rawContent = fs.readFileSync(filePath, "utf-8").trim();
     if (!rawContent) {
@@ -87,17 +91,18 @@ function renderFrame(matrix: Matrix, step: number, gap: number, message: string,
     console.log(" ");
 }
 
-async function animateCombSortMainDiagonal(matrix: Matrix, delayMs: number): Promise<void> {
+async function animateCombSortMainDiagonal(matrix: Matrix, delayMs: number): Promise<number> {
     const diagonalLength = Math.min(matrix.length, matrix[0].length);
     if (diagonalLength <= 1) {
         renderFrame(matrix, 0, 1, "Недостаточно элементов для сортировки.", null, false);
-        return;
+        return 0;
     }
 
     const shrinkFactor = 1.247;
     let gap = diagonalLength;
     let swapped = true;
     let step = 0;
+    const startTime = performance.now();
 
     renderFrame(matrix, step, gap, "Старт алгоритма.", null, false);
     await sleep(delayMs);
@@ -144,6 +149,7 @@ async function animateCombSortMainDiagonal(matrix: Matrix, delayMs: number): Pro
     }
 
     renderFrame(matrix, step, gap, "Готово: диагональ отсортирована.", null, false);
+    return performance.now() - startTime;
 }
 
 async function main(): Promise<void> {
@@ -159,7 +165,8 @@ async function main(): Promise<void> {
 
     try {
         const matrix = readMatrixFromFile(absolutePath);
-        await animateCombSortMainDiagonal(matrix, delayMs);
+        const elapsedMs = await animateCombSortMainDiagonal(matrix, delayMs);
+        console.log(`Время работы алгоритма: ${formatElapsedTime(elapsedMs)}`);
     } catch (error) {
         console.error("Ошибка:", (error as Error).message);
         process.exit(1);

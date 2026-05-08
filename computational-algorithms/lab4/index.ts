@@ -3,6 +3,10 @@ import * as path from "path";
 
 type Matrix = number[][];
 
+function formatElapsedTime(elapsedMs: number): string {
+    return `${elapsedMs.toFixed(3)} мс`;
+}
+
 function readMatrixFromFile(filePath: string): Matrix {
     const rawContent = fs.readFileSync(filePath, "utf-8").trim();
     if (!rawContent) {
@@ -95,8 +99,11 @@ function main(): void {
     try {
         const matrix = readMatrixFromFile(absolutePath);
         printMatrix(matrix, "Исходная матрица:");
+        const startTime = performance.now();
         const sorted = sortMainDiagonalComb(matrix);
+        const elapsedMs = performance.now() - startTime;
         printMatrix(sorted, "Матрица после сортировки:");
+        console.log(`Время работы алгоритма: ${formatElapsedTime(elapsedMs)}`);
     } catch (error) {
         console.error("Ошибка:", (error as Error).message);
         process.exit(1);

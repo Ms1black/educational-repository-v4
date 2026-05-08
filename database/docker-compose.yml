@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: antifraud_pg
+    environment:
+      POSTGRES_DB: antifraud
+      POSTGRES_USER: fraud_user
+      POSTGRES_PASSWORD: secret123
+    ports:
+      - '5432:5432'
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: antifraud_redis
+    command: redis-server --requirepass secret123
+    ports:
+      - '6379:6379'
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: antifraud_ch
+    environment:
+      CLICKHOUSE_DB: antifraud
+      CLICKHOUSE_USER: ch_user
+      CLICKHOUSE_PASSWORD: secret123
+    ports:
+      - '8123:8123'
+      - '9000:9000'
+    ulimits:
+      nofile: { soft: 262144, hard: 262144 }
+
+  neo4j:
+    image: neo4j:5-community
+    container_name: antifraud_neo4j
+    environment:
+      NEO4J_AUTH: neo4j/secret123
+    ports:
+      - '7474:7474'
+      - '7687:7687'
+    volumes:
+      - neo4j_data:/data
+
+volumes:
+  pg_data:
+  neo4j_data:

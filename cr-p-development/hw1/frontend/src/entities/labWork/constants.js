@@ -9,7 +9,6 @@ export const CATEGORIES = [
 
 export const STATUSES = ['Not Started', 'In Progress', 'Completed'];
 
-// Short prefix codes displayed on cards
 export const CATEGORY_CODE = {
   'Neural Haptics':   'NH',
   'Kinetic Logic':    'KL',
@@ -19,7 +18,6 @@ export const CATEGORY_CODE = {
   'Soft Robotics':    'SR',
 };
 
-// Visual data for the OverviewPage department cards
 export const CATEGORY_META = {
   'Neural Haptics':    { index: 'NH-03', img: '/img/lab-neural-haptics.png',   desc: '人工的な触感と人間の直感が融合。触覚システムとバイオフィードバックの研究。' },
   'Kinetic Logic':     { index: 'KL-04', img: '/img/lab-kinetic-logic.png',    desc: '自律の建築。古代幾何学と量子フローの垂直統合。運動制御アルゴリズム。' },

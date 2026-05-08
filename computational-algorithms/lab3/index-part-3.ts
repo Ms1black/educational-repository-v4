@@ -1,3 +1,4 @@
+
 import * as readline from 'readline';
 
 const rl = readline.createInterface({
@@ -169,10 +170,10 @@ function isSymmetric(head: Node | null): boolean {
         fast = fast.next.next;
     }
 
-
     if (fast !== null) {
         slow = slow?.next ?? null;
     }
+
     while (slow !== null) {
         stack.push(slow.value);
         slow = slow.next;
@@ -189,56 +190,14 @@ function isSymmetric(head: Node | null): boolean {
     return true;
 }
 
-function reverseNumber(n: number): number {
-    let value = n;
-    let reversed = 0;
-    while (value > 0) {
-        const digit = value % 10;
-        reversed = reversed * 10 + digit;
-        value = Math.floor(value / 10);
-    }
-    return reversed;
-}
-
-function isPalindromeNumber(n: number): boolean {
-    const head = buildListFromInput(String(n));
-    return isSymmetric(head);
-}
-
-function getPalindrome(start: number): string {
-    let value = start;
-    let i = 0;
-    let lastLine = '';
-
-    while (i < 5) {
-        const left = value;
-        const reversed = reverseNumber(value);
-        const sum = left + reversed;
-        value = sum;
-        lastLine = left + '+' + reversed + '=' + sum;
-
-        if (isPalindromeNumber(value)) {
-            return lastLine + ' true (' + (i + 1) + ')';
-        }
-        i++;
-    }
-
-    return lastLine + ' false (5)';
-}
-
 async function main(): Promise<void> {
-
-    await askQuestion(' ');
-
-    let n = 100;
-    while (n <= 999) {
-        const process = getPalindrome(n);
-        console.log(process);
-        n++;
-    }
-
+    const input = await askQuestion('Введите список (слитно или через пробел): ');
+    const head = buildListFromInput(input);
+    const result = isSymmetric(head);
+    console.log(result ? 'true' : 'false');
     rl.close();
 }
 
 main();
+
 

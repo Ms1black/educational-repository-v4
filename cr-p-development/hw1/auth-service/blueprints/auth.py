@@ -9,6 +9,43 @@ auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.post('/register')
 def register():
+    """
+    Регистрация нового пользователя
+    ---
+    tags:
+      - Auth
+    consumes:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          required:
+            - username
+            - password
+          properties:
+            username:
+              type: string
+              example: john_doe
+            password:
+              type: string
+              example: secret123
+    responses:
+      201:
+        description: Пользователь успешно зарегистрирован
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Registered successfully
+      400:
+        description: Не передан username или password
+      409:
+        description: Пользователь с таким именем уже существует
+    """
     data = request.get_json(silent=True) or {}
     username = data.get('username', '').strip()
     password = data.get('password', '')
@@ -27,6 +64,44 @@ def register():
 
 @auth_bp.post('/login')
 def login():
+    """
+    Вход пользователя
+    ---
+    tags:
+      - Auth
+    consumes:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          required:
+            - username
+            - password
+          properties:
+            username:
+              type: string
+              example: john_doe
+            password:
+              type: string
+              example: secret123
+    responses:
+      200:
+        description: Успешный вход, возвращает JWT-токен
+        schema:
+          type: object
+          properties:
+            token:
+              type: string
+              example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+            username:
+              type: string
+              example: john_doe
+      401:
+        description: Неверный логин или пароль
+    """
     data = request.get_json(silent=True) or {}
     username = data.get('username', '').strip()
     password = data.get('password', '')

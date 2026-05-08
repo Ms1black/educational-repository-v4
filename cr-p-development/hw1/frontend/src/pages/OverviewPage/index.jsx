@@ -48,7 +48,7 @@ const DeptDetail = ({ category, onBack }) => {
     try {
       await dataClient.delete(`/lab-works/${id}`);
       setLabWorks((prev) => prev.filter((lw) => lw.id !== id));
-    } catch { /* silent */ }
+    } catch { }
   };
 
   return (

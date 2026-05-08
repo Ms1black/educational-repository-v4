@@ -1,7 +1,23 @@
 import os
 from flask import Flask
 from flask_cors import CORS
+from flasgger import Swagger
 from extensions import db, jwt
+
+SWAGGER_CONFIG = {
+    'title': 'TIAR Auth Service',
+    'uiversion': 3,
+    'version': '1.0.0',
+    'description': 'Микросервис авторизации — регистрация и вход пользователей, выдача JWT-токенов.',
+    'securityDefinitions': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'Введите токен в формате: Bearer <token>',
+        }
+    },
+}
 
 
 def create_app():
@@ -15,6 +31,7 @@ def create_app():
     CORS(app)
     db.init_app(app)
     jwt.init_app(app)
+    Swagger(app, config=SWAGGER_CONFIG)
 
     from blueprints.auth import auth_bp
     app.register_blueprint(auth_bp)
